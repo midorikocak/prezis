@@ -1,6 +1,6 @@
 <?php
     include('vendor/autoload.php');
 
-    $app = new \MidoriKocak\App('data/prezis.json');
+    $app = new \MidoriKocak\PreziFinder('data/prezis.json');
     echo $app->prezis();
 ?>
