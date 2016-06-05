@@ -1,37 +1,30 @@
 # Find Prezis
-> A small app to retrieve Prezis based on search.
+> A small RESTFULL app to retrieve Prezis based on search.
 
 [![Build Status][travis-image]][travis-url]
 
 This app allows to search retrieve one or a list of different Prezis based on user's request parameters.
 
-![](header.png)
-
 ## Installation
 
+After you go into the app directory, you should execute following commands.
 OS X & Linux:
 
 ```sh
-npm install my-crazy-module --save
-```
-
-Windows:
-
-```sh
-edit autoexec.bat
+composer install
 ```
 
 ## Usage example
 
-A few motivating and useful examples of how your product can be used. Spice this up with code blocks and potentially more screenshots.
+This app requires a working webserver. You can make HTTP requests to specified endpoints.
 
 ## Development setup
 
-Describe how to install all development dependencies and how to run an automated test-suite of some kind. Potentially do this for multiple platforms.
+To run all tests of the app, execute these commands in the app directory.
 
 ```sh
-make install
-npm test
+composer install
+phpunit
 ```
 
 ## Release History
@@ -51,14 +44,11 @@ npm test
 
 ## Meta
 
-Your Name – [@YourTwitter](https://twitter.com/dbader_org) – YourEmail@example.com
+Midori Kocak – [@midorikocak](https://twitter.com/midorikocak) – midori@mynameismidori.com
 
-Distributed under the XYZ license. See ``LICENSE`` for more information.
+Distributed under the MIT license. See ``LICENSE`` for more information.
 
-[https://github.com/yourname/github-link](https://github.com/dbader/)
+[https://github.com/midorikocak/prezis](https://github.com/prezis/)
 
-[npm-image]: https://img.shields.io/npm/v/datadog-metrics.svg?style=flat-square
-[npm-url]: https://npmjs.org/package/datadog-metrics
-[npm-downloads]: https://img.shields.io/npm/dm/datadog-metrics.svg?style=flat-square
 [travis-image]: https://img.shields.io/travis/dbader/node-datadog-metrics/master.svg?style=flat-square
 [travis-url]: https://travis-ci.org/dbader/node-datadog-metrics
