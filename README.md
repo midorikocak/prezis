@@ -1,11 +1,9 @@
-# Product Name
-> Short blurb about what your product does.
+# Find Prezis
+> A small app to retrieve Prezis based on search.
 
-[![NPM Version][npm-image]][npm-url]
 [![Build Status][travis-image]][travis-url]
-[![Downloads Stats][npm-downloads]][npm-url]
 
-One to two paragraph statement about your product and what it does.
+This app allows to search retrieve one or a list of different Prezis based on user's request parameters.
 
 ![](header.png)
 
