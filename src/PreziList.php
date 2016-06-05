@@ -36,7 +36,4 @@ class PreziList
         }
         return $result;
     }
-
-
-
 }

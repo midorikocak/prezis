@@ -9,7 +9,7 @@
 namespace MidoriKocak;
 
 
-class App
+class PreziFinder
 {
     public $preziList;
 

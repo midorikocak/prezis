@@ -1,21 +1,46 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: mtkocak
- * Date: 05/06/16
- * Time: 17:05
- */
-
 namespace MidoriKocak;
 
 
+/**
+ * Class Creator
+ * @package MidoriKocak
+ */
 class Creator
 {
-    public $name;
-    public $profileUrl;
+    /**
+     * @var string
+     */
+    private $name;
+    /**
+     * @var string
+     */
+    private $profileUrl;
 
-    public function __construct($name, $profileUrl){
+    /**
+     * Creator constructor.
+     * @param string $name
+     * @param string $profileUrl
+     */
+    public function __construct(string $name, string $profileUrl)
+    {
         $this->name = $name;
         $this->profileUrl = $profileUrl;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName():string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName(string $name)
+    {
+        $this->name = $name;
     }
 }
