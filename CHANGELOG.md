@@ -11,3 +11,20 @@ No unit tests. Where to go next: Getters and Setters, tests, no front controller
 - Started with open source templates
 - Created classes
 - Front Controller is index.php
+
+## 0.2-alpha
+
+### Changed
+Added getters and setters. There many getter and setter methods. Encapsulation shown.
+Typed parameters and properties exist but still objects are not immutable.
+Responses from objects are array hell. Some doccomments. No defined responsibilities.
+No tests yet.
+
+### Added
+- getters and setters
+- private properties
+- parameter and return types
+- some doccomments
+
+### Removed
+- App class
