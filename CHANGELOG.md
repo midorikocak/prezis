@@ -28,3 +28,14 @@ No tests yet.
 
 ### Removed
 - App class
+
+## 0.3-alpha
+
+### Changed
+Why we need OOP?
+
+### Added
+Trivia PreziFinder class and tests.
+
+### Removed
+Classes to show why we need oop.

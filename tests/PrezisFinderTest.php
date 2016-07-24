@@ -12,11 +12,11 @@ class PreziFinderTest extends \PHPUnit_Framework_TestCase {
     }
 
     public function testGetPreziById(){
-
+        var_dump($this->preziFinder->prezis("56f137f5e194b019d3076587"));
     }
 
     public function testGetAllPrezis(){
-       echo $this->preziFinder->prezis();
+       //var_dump($this->preziFinder->prezis());
     }
 
     public function testSearch(){
