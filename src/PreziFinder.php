@@ -1,36 +1,22 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: mtkocak
- * Date: 05/06/16
- * Time: 17:40
- */
 
 namespace MidoriKocak;
 
 
+use Mtkocak\Database\BasicDB;
+
 class PreziFinder
 {
-    public $preziList;
+    private $db;
 
-    public function __construct($fileName)
+    public function __construct()
     {
-        $data = json_decode(file_get_contents($fileName),true);
-        $this->preziList = new PreziList($data);
+        $this->db = new BasicDB(Config::DB_Host, Config::DB_Name, Config::DB_User, Config::DB_Password);
     }
 
-    public function prezis(){
-        $result = $this->preziList->all();
-        return json_encode($result);
-    }
-
-    public function prezi($id){
-        $result = $this->preziList->one($id);
-        return json_encode($result);
-    }
-
-    public function search($title){
-        $result = $this->preziList->search($title);
-        return json_encode($result);
+    public function install(){
+        if(empty($this->db->select('prezis')->run())){
+            $data = json_decode(file_get_contents(Config::APP_Data), true);
+        }
     }
 }

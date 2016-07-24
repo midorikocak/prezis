@@ -43,4 +43,20 @@ class Creator
     {
         $this->name = $name;
     }
+
+    /**
+     * @return string
+     */
+    public function getProfileUrl():string
+    {
+        return $this->profileUrl;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setProfileUrl(string $profileUrl)
+    {
+        $this->profileUrl = $profileUrl;
+    }
 }

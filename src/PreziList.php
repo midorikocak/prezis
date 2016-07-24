@@ -9,38 +9,65 @@
 namespace MidoriKocak;
 
 
-class PreziList
+class PreziList implements ListInterface
 {
-    public $list = [];
-
-    public function __construct($data){
-        foreach($data as $key => $prezi){
-            $creator = new Creator($prezi['creator']['name'],$prezi['creator']['profileUrl']);
-            $this->list[$prezi['id']] = new Prezi($prezi['id'], $prezi['title'], $prezi['thumbnail'], $creator, $prezi['createdAt']);
-        }
+    public function __construct($data)
+    {
     }
 
-    public function all(){
-        $result = [];
-        foreach($this->list as $key => $value){
-            array_push($result, $this->one($key));
-        }
-        return $result;
+    /**
+     * @return PreziList
+     */
+    public function getPrezis():PreziList
+    {
+        return $this;
     }
 
-    public function one($id){
-        $prezi = $this->list[$id];
-        $result = [$prezi->getId(), $prezi->getTitle(), $prezi->getThumbnail()];
-        return $result;
+    /**
+     * @return PreziList
+     */
+    public function getPreziById():Prezi
+    {
+        return $this;
     }
 
-    public function search($title){
-        $result = [];
-        foreach($this->list as $key=> $value){
-            if($value->getTitle == $title){
-                array_push($result, [$value->getId, $value->getTitle]);
-            }
-        }
-        return $result;
+    /**
+     * @param string $field
+     * @return ListInterface
+     */
+    public function sort(string $field):ListInterface
+    {
+        // TODO: Implement sort() method.
+        return $this;
+    }
+
+    /**
+     * @param array $query
+     * @return ListInterface
+     */
+    public function search(array $query):ListInterface
+    {
+        // TODO: Implement search() method.
+        return $this;
+    }
+
+    /**
+     * @param array $query
+     * @return ListInterface
+     */
+    public function filter(array $query):ListInterface
+    {
+        // TODO: Implement filter() method.
+        return $this;
+    }
+
+    /**
+     * @param string $ascOrDsc
+     * @return ListInterface
+     */
+    public function order(string $ascOrDsc):ListInterface
+    {
+        // TODO: Implement order() method.
+        return $this;
     }
 }

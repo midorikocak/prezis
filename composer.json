@@ -3,7 +3,8 @@
     "description": "a mini api example with unit testing and php",
     "type": "project",
     "require": {
-        "phpunit/phpunit": "^5.2"
+        "phpunit/phpunit": "^5.2",
+        "mtkocak/basicdb": "dev-master"
     },
     "license": "MIT",
     "authors": [
