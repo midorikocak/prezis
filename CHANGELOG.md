@@ -32,10 +32,13 @@ No tests yet.
 ## 0.3-alpha
 
 ### Changed
-Why we need OOP?
+Why we need OOP? Procedural approach. There is too much repeated code also almost no readability. Even though 
+the prezifinder is a class it's very difficult to change things. Still we dont have routers for http requests.
+And use of json_encode is not good.
 
 ### Added
-Trivia PreziFinder class and tests.
+Trivia PreziFinder class and tests. Database installer and model file.
+
 
 ### Removed
 Classes to show why we need oop.
