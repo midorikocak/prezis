@@ -140,6 +140,7 @@ class Prezi
      */
     public function printPreziAsArray(array $fields = null)
     {
+        $array = [];
         if ($fields == null) {
             $array = [
                 "id" => $this->getId(),

@@ -42,3 +42,17 @@ Trivia PreziFinder class and tests. Database installer and model file.
 
 ### Removed
 Classes to show why we need oop.
+
+## 1.0-beta
+
+### Changed
+Addes Interfaces using strategy pattern. There still could be some SOLID issues.
+Classes are object oriented but some of them seem to have godly behavior. Did not use any framework.
+All tests are complete and passing. Will also add CLIQueryParser for command line interface. Docs need to be updated.
+Classes needs their description and what they do.
+
+### Added
+QueryParserInterface, ListInterface, RequestHandlerInterface, URLQueryParser.
+
+### Removed
+PreziFinder implements RequestHandlerInterface, is not depending on any db.

@@ -1,6 +1,5 @@
 <?php
     include('vendor/autoload.php');
-
-    $app = new \MidoriKocak\PreziFinder('data/prezis.json');
-    echo $app->prezis();
+    $preziFinder = new \MidoriKocak\PreziFinder(new \MidoriKocak\URLQueryParser(), new \MidoriKocak\PDOPreziList());
+    echo $preziFinder->request($_SERVER['REQUEST_URI']);
 ?>

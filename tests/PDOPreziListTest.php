@@ -23,7 +23,7 @@ class PDOPreziListTest extends \PHPUnit_Framework_TestCase
 
     public function testGetPreziById()
     {
-        $onePrezi = $this->preziList->getPreziById("56f137f5e194b019d3076587");;
+        $onePrezi = $this->preziList->getPreziById("56f137f5e194b019d3076587");
         $this->assertEquals($onePrezi, $this->onePreziAsArray);
     }
 

@@ -7,213 +7,101 @@ use Mtkocak\Database\BasicDB;
  * Class Prezi
  * @package MidoriKocak
  */
-class PreziFinder
+class PreziFinder implements RequestHandlerInterface
 {
     /**
-     * @var BasicDB
+     * @var QueryParserInterface
      */
-    private $db;
+    private $queryParser;
     /**
-     * @var bool
+     * @var PreziListInterface
      */
-    private $installed;
-    /**
-     * @var string
-     */
-    private $fields;
+    private $preziList;
     /**
      * @var
      */
-    private $sort;
+    private $requestType;
     /**
      * @var
      */
-    private $order;
-    /**
-     * @var
-     */
-    private $start;
-    /**
-     * @var
-     */
-    private $end;
-    /**
-     * @var
-     */
-    private $search;
+    private $requestParameters;
 
     /**
      * PreziFinder constructor.
+     * @param QueryParserInterface $queryParser
+     * @param PreziListInterface $preziList
      */
-    public function __construct()
+    public function __construct(QueryParserInterface $queryParser, PreziListInterface $preziList)
     {
-        $this->db = new BasicDB(Config::DB_Host, Config::DB_Name, Config::DB_User, Config::DB_Password);
-        $this->installed = !empty($this->db->select('prezis')->run());
-        $this->fields = "prezis.id, prezis.title, prezis.thumbnail, creators.id AS creator_id, creators.name AS creator_name, creators.profileUrl AS creator_profileUrl, DATE_FORMAT(prezis.createdAt ,'%M %e, %Y') AS createdAt";
-
-        if (!$this->installed) {
-            $this->install();
-        }
+        $this->queryParser = $queryParser;
+        $this->preziList = $preziList;
     }
 
     /**
-     * @param null $data
-     * @return string
+     * @param array $request
+     * @return bool
      */
-    public function prezis($data = null)
+    public function validate(array $request):bool
     {
-        if ($data == null) {
-            $query = $this->db->select('prezis')
-                ->from($this->fields)
-                ->join('creators', '%s.id = %s.creator_id', 'left');
+        if ((!isset($request["request"]) || $request["request"][0] != "prezis" || !isset ($request["parameters"]))) return false;
 
-            if ($this->sort != null) {
-                $query->orderby($this->sort, $this->order);
-            }
+        $requestSize = sizeof($request["request"]);
+        $parameterSize = sizeof($request["parameters"]);
 
-            if ($this->start != null && $this->end != null) {
-                $query->limit($this->start, $this->end);
-            }
-
-            if ($this->search != null) {
-                $query->where("title", "%" . $this->search . "%", "LIKE");
-            }
-
-            return $this->formatPrezis($query->run(), true);
-        } elseif (is_string($data)) {
-            $query = $this->db->select('prezis')
-                ->from($this->fields)
-                ->where("prezis`.`id", $data)
-                ->join('creators', '%s.id = %s.creator_id', 'left');
-            $result = $query->run(true);
-            return $this->formatPrezi($result, true);
-        } elseif (is_array($data)) {
-            if (isset($data["id"]) && $this->installed) {
-                $this->db->update('prezis')
-                    ->where('id', $data["id"])
-                    ->set($data);
-            } else {
-                if (isset($data['creator'])) {
-                    $creatorId = $this->creators($data['creator']);
-                    unset($data['creator']);
-                    $data["creator_id"] = $creatorId;
-                }
-                if (isset($data['createdAt'])) {
-                    $createdAt = date("Y-m-d H:i:s", strtotime($data['createdAt']));
-                    $data['createdAt'] = $createdAt;
-                }
-                $this->db->insert('prezis')
-                    ->set($data);
-                return $this->db->lastId();
-            }
+        if ($requestSize == 1 && $parameterSize == 0) {
+            $this->requestType = "all";
+            return true;
         }
+        if ($requestSize == 1 && $parameterSize > 0) {
+            if (isset($request["parameters"]["sort"])) $this->requestType = "sort";
+            elseif (isset($request["parameters"]["fields"])) $this->requestType = "fields";
+            else $this->requestType = "filter";
+            $this->requestParameters = $request["parameters"];
+            return true;
+        }
+
+        if ($requestSize == 2 && ($request["request"][1] == "search")) {
+            $this->requestType = "search";
+            $this->requestParameters = $request["parameters"];
+            return true;
+        }
+        if ($requestSize == 2 && ($request["request"][1] != "search")) {
+            $this->requestType = "id";
+            $this->requestParameters = $request["request"][1];
+            return true;
+        }
+        return false;
     }
 
     /**
-     * @param null $data
+     * @param string $query
      * @return string
      */
-    public function creators($data = null)
+    public function request(string $query):string
     {
-        if ($data == null) {
-            $this->db->select('creators');
-        } elseif (is_string($data)) {
-        } elseif (is_array($data)) {
-            if (isset($data["id"])) {
-                $this->db->update('creators')
-                    ->where('id', $data["id"])
-                    ->set($data);
-            } else {
-                $this->db->insert('creators')
-                    ->set($data);
-                return $this->db->lastId();
+        $request = $this->queryParser->parse($query);
+        header('Content-type: application/json');
+        $response = "";
+        if ($this->validate($request)) {
+            if ($this->requestType == "id") {
+                $response = json_encode($this->preziList->getPreziById($this->requestParameters));
+            } elseif ($this->requestType == "all") {
+                $response = json_encode($this->preziList->getAllPrezis());
+            } elseif ($this->requestType == "search") {
+                $response = json_encode($this->preziList->search($this->requestParameters));
+            } elseif ($this->requestType == "sort") {
+                $response = json_encode($this->preziList->sort($this->requestParameters["sort"], $this->requestParameters["order"]));
+            } elseif ($this->requestType == "fields") {
+                $response = json_encode($this->preziList->fields(explode(",", $this->requestParameters["fields"])));
+            } elseif ($this->requestType == "filter") {
+                $response = json_encode($this->preziList->filter($this->requestParameters));
             }
         }
-    }
-
-    /**
-     *
-     */
-    private function install()
-    {
-        $data = json_decode(file_get_contents(Config::APP_Data), true);
-        foreach ($data as $prezi) {
-            $this->prezis($prezi);
+        else{
+            http_response_code(400);
+            $response = json_encode(["message"=>"Validation failed."]);
         }
-    }
 
-    /**
-     * @param $title
-     * @return string
-     */
-    public function search($title)
-    {
-        $this->search = $title;
-        return $this->prezis();
+        return $response;
     }
-
-    /**
-     * @param $field
-     * @param $order
-     * @return string
-     */
-    public function sort($field, $order)
-    {
-        $this->order = $order;
-        $this->sort = $field;
-        return $this->prezis();
-    }
-
-    /**
-     * @param $fields
-     * @return string
-     */
-    public function fields($fields)
-    {
-        $this->fields = $fields;
-        return $this->prezis();
-    }
-
-    /**
-     * @param $data
-     * @param bool $json
-     * @return string
-     */
-    private function formatPrezis($data, $json = false)
-    {
-        foreach ($data as &$prezi) {
-            $this->formatPrezi($prezi);
-        }
-        if ($json)
-            return json_encode($data);
-        else
-            return $data;
-    }
-
-    /**
-     * @param $prezi
-     * @param bool $json
-     * @return string
-     */
-    private function formatPrezi(&$prezi, $json = false)
-    {
-        if (strpos($this->fields, "creator") !== false) {
-            $creator = [];
-            if (isset($prezi["creator_name"])) {
-                $creator['name'] = $prezi["creator_name"];
-                unset($prezi["creator_name"]);
-                unset($prezi["creator_id"]);
-            }
-            if (isset($prezi["creator_profileUrl"])) {
-                $creator['profileUrl'] = $prezi["creator_profileUrl"];
-                unset($prezi["creator_profileUrl"]);
-            }
-            $prezi["creator"] = $creator;
-        }
-        if ($json)
-            return json_encode($prezi);
-        else
-            return $prezi;
-    }
-
 }
