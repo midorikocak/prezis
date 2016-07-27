@@ -4,7 +4,8 @@
     "type": "project",
     "require": {
         "phpunit/phpunit": "^5.2",
-        "mtkocak/basicdb": "dev-master"
+        "mtkocak/basicdb": "dev-master",
+        "slim/slim": "^3.5"
     },
     "license": "MIT",
     "authors": [

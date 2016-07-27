@@ -4,7 +4,13 @@ namespace MidoriKocak;
 use Mtkocak\Database\BasicDB;
 
 /**
- * Class Prezi
+ * Class PreziFinder
+ *
+ * Usage:
+ *
+ * $preziFinder = new \MidoriKocak\PreziFinder(new \MidoriKocak\URLQueryParser(), new \MidoriKocak\PDOPreziList());
+ * echo $preziFinder->request($_SERVER['REQUEST_URI']);
+ *
  * @package MidoriKocak
  */
 class PreziFinder implements RequestHandlerInterface
