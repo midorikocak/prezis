@@ -56,3 +56,14 @@ QueryParserInterface, ListInterface, RequestHandlerInterface, URLQueryParser.
 
 ### Removed
 PreziFinder implements RequestHandlerInterface, is not depending on any db.
+
+## 1.0.2
+
+### Changed
+Added slim framework for better HTTP handling.
+
+### Added
+Slim Framework and routes
+
+### Removed
+PreziFinder as RequestHandler from index.php
