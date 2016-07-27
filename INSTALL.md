@@ -6,4 +6,10 @@ For installation, we need to consider some topics:
  
 Now, follow these steps:
  - Clone repository
- - Run project (This parte should be updated later)
+ - composer install
+ 
+To fill database with json. 
+ - Should create an empty database.
+ - Add database credentials, hostname and database name to
+ src/Config.php
+ - to generate database values from json file at data/prezis.json, run phpunit tests/PDOPreziListTest.php

@@ -12,7 +12,22 @@ OS X & Linux:
 
 ```sh
 composer install
+phpunit tests/PDOPreziListTest.php
 ```
+
+For installation, we need to consider some topics:
+ - Firstly, install PHP 7
+ - Secondly, install PHPUnit for testing proposes
+ 
+Now, follow these steps:
+ - Clone repository
+ - composer install
+ 
+To fill database with json. 
+ - Should create an empty database.
+ - Add database credentials, hostname and database name to
+ src/Config.php
+ - to generate database values from json file at data/prezis.json, run phpunit tests/PDOPreziListTest.php
 
 ## Usage example
 
@@ -24,6 +39,7 @@ To run all tests of the app, execute these commands in the app directory.
 
 ```sh
 composer install
+phpunit tests/PDOPreziListTest.php
 phpunit
 ```
 

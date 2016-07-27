@@ -15,11 +15,29 @@ class PDOPreziList implements PreziListInterface
      */
     public $list;
 
+    /**
+     * @var BasicDB
+     */
     private $db;
+    /**
+     * @var
+     */
     private $fields;
+    /**
+     * @var string
+     */
     private $queryFields;
+    /**
+     * @var
+     */
     private $sort;
+    /**
+     * @var
+     */
     private $order;
+    /**
+     * @var
+     */
     private $search;
 
     /**
@@ -34,6 +52,47 @@ class PDOPreziList implements PreziListInterface
         if (!$this->installed) {
             $this->install();
         }
+    }
+
+    /**
+     *
+     */
+    private function install()
+    {
+        $data = json_decode(file_get_contents(Config::APP_Data), true);
+        foreach ($data as $prezi){
+            $this->addPrezi($prezi);
+        }
+    }
+
+    /**
+     * @param $data
+     * @return string
+     */
+    private function addPrezi($data){
+        if(isset($data['creator'])){
+            $creatorId = $this->addCreator($data['creator']);
+            unset($data['creator']);
+            $data["creator_id"] = $creatorId;
+        }
+        if(isset($data['createdAt'])){
+            $createdAt = date ("Y-m-d H:i:s", strtotime($data['createdAt']));
+            $data['createdAt'] = $createdAt;
+        }
+        $this->db->insert('prezis')
+            ->set($data);
+        return $this->db->lastId();
+    }
+
+    /**
+     * @param $data
+     * @return string
+     */
+    private function addCreator($data)
+    {
+        $this->db->insert('creators')
+            ->set($data);
+        return $this->db->lastId();
     }
 
     /**
@@ -78,6 +137,10 @@ class PDOPreziList implements PreziListInterface
         return $prezi->printPreziAsArray();
     }
 
+    /**
+     * @param array $query
+     * @return Prezi
+     */
     private function createPreziFromQueryArray(array $query):Prezi
     {
         if(strpos($this->queryFields, "creator")!==false) {
