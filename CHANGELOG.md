@@ -43,7 +43,7 @@ Trivia PreziFinder class and tests. Database installer and model file.
 ### Removed
 Classes to show why we need oop.
 
-## 1.0-beta
+## 1.0.1-beta
 
 ### Changed
 Added Interfaces using strategy pattern. There still could be some SOLID issues.
