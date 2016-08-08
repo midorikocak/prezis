@@ -44,8 +44,6 @@ $app->get('/prezis', function ($request, $response, $args) {
             $response->withJson($this->preziList->sort($params["sort"], $params["order"]));
         } elseif ($type == "fields") {
             $response->withJson($this->preziList->fields(explode(",", $params["fields"])));
-        } elseif ($type == "filter") {
-            $response->withJson($this->preziList->filter($params));
         }
     }
     return $response;
@@ -61,8 +59,8 @@ $app->get('/prezis/sort', function ($request, $response, $args) {
     return $response;
 });
 
-$app->get('/prezis/fields', function ($request, $response, $args) {
-    $response->withJson($this->preziList->sort($request->getQueryParams()));
+$app->get('/prezis/filter', function ($request, $response, $args) {
+    $response->withJson($this->preziList->filter($request->getQueryParams()));
     return $response;
 });
 
