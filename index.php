@@ -30,7 +30,6 @@ $app->get('/', function ($request, $response, $args) {
 });
 
 $app->get('/prezi/[{id}]', function ($request, $response, $args) {
-    var_dump($args['id']);
     $response->withJson($this->preziList->getPreziById($args['id']));
     return $response;
 });
