@@ -39,6 +39,10 @@ class PDOPreziList implements PreziListInterface
      * @var
      */
     private $search;
+    /**
+     * @var
+     */
+    private $installed = false;
 
     /**
      * PDOPreziList constructor.
@@ -59,6 +63,7 @@ class PDOPreziList implements PreziListInterface
      */
     private function install()
     {
+        $this->db->exec(file_get_contents(Config::DB_tables));
         $data = json_decode(file_get_contents(Config::APP_Data), true);
         foreach ($data as $prezi){
             $this->addPrezi($prezi);
