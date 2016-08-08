@@ -86,7 +86,6 @@ class PreziFinder implements RequestHandlerInterface
     public function request(string $query):string
     {
         $request = $this->queryParser->parse($query);
-        header('Content-type: application/json');
         $response = "";
         if ($this->validate($request)) {
             if ($this->requestType == "id") {
