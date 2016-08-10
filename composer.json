@@ -5,7 +5,8 @@
     "require": {
         "phpunit/phpunit": "^5.2",
         "mtkocak/basicdb": "dev-master",
-        "slim/slim": "^3.5"
+        "slim/slim": "^3.5",
+        "palanik/corsslim": "dev-slim3"
     },
     "license": "MIT",
     "authors": [
